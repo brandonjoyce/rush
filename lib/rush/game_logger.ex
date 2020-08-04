@@ -9,9 +9,9 @@ defmodule Rush.GameLogger do
   end
 
   def handle_info(:log, _) do
-    [:segment1, :segment2, :segment3]
+    [:tower1, :tower2, :tower3, :tower4, :tower5, :tower6]
     |> Enum.map(fn(pid) ->
-      %{monsters: monsters} = :sys.get_state(pid)
+      %{state: %{monsters: monsters}} = :sys.get_state(pid)
       _total_health = Enum.reduce(monsters, 0, fn(monster, total) -> total + monster.health end)
     end)
     |> build_log()
@@ -22,8 +22,8 @@ defmodule Rush.GameLogger do
     {:noreply, nil}
   end
 
-  defp build_log(segments) do
-    [one, two, three] = segments
-    "1⃣  ❤#{one} 2⃣  ❤#{two} 3⃣  ❤#{three}"
+  defp build_log(towers) do
+    [tower1, tower2, tower3, tower4, tower5, tower6] = towers
+    "1⃣  ❤#{tower1 + tower2} 2⃣  ❤#{tower3 + tower4} 3⃣  ❤#{tower5 + tower6}"
   end
 end
