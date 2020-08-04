@@ -1,9 +1,12 @@
 defmodule Rush.Tower do
   use GenServer
 
-  def init([target: target, dps: dps] = state) do
+  @dps Application.get_env(:rush, :tower_dps)
+
+  def init([target: _target] = state) do
+    new_state = Keyword.put(state, :dps, @dps)
     send(self(), :shoot)
-    {:ok, state}
+    {:ok, new_state}
   end
 
   def handle_info(:shoot, state) do

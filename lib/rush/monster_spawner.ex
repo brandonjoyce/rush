@@ -3,6 +3,9 @@ defmodule Rush.MonsterSpawner do
 
   alias Rush.Monster
 
+  @spawn_rate Application.get_env(:rush, :spawn_rate)
+  @spawn_health Application.get_env(:rush, :spawn_health)
+
   def start_link(_) do
     GenServer.start_link(__MODULE__, [], name: __MODULE__)
   end
@@ -13,13 +16,7 @@ defmodule Rush.MonsterSpawner do
   end
 
   def handle_info(:spawn, _) do
-    new_monsters = [
-      %Monster{},
-      %Monster{},
-      %Monster{},
-      %Monster{},
-      %Monster{},
-    ]
+    new_monsters = List.duplicate(%Monster{health: @spawn_health}, @spawn_rate)
 
     :ok = GenServer.call(:segment1, {:new_monsters, new_monsters})
 

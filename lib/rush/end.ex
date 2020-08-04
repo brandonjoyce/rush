@@ -12,7 +12,7 @@ defmodule Rush.End do
   def handle_call({:new_monsters, new_monsters}, _from, _) do
     new_monsters
     |> Enum.each(fn(monster) ->
-      IO.puts "*** OH NO! *** Monster w/ #{monster.health} remaining reached our flag!"
+      IO.puts "🔥👹 health: #{monster.health} reached our flag🔥"
     end)
     {:reply, :ok, nil}
   end
