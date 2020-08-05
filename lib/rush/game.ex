@@ -15,9 +15,9 @@ defmodule Rush.Game do
 
     {:ok, _game_logger} = GenServer.start_link(Rush.GameLogger, [])
 
-    {:ok, _} = GenStage.sync_subscribe(segment1, to: spawner)
-    {:ok, _} = GenStage.sync_subscribe(segment2, to: spawner)
-    {:ok, _} = GenStage.sync_subscribe(segment3, to: spawner)
+    {:ok, _} = GenStage.sync_subscribe(segment1, to: spawner, max_demand: 10, min_demand: 4)
+    {:ok, _} = GenStage.sync_subscribe(segment2, to: spawner, max_demand: 10, min_demand: 4)
+    {:ok, _} = GenStage.sync_subscribe(segment3, to: spawner, max_demand: 10, min_demand: 4)
     {:ok, _} = GenStage.sync_subscribe(tower1, to: segment1)
     {:ok, _} = GenStage.sync_subscribe(tower2, to: segment1)
     {:ok, _} = GenStage.sync_subscribe(tower3, to: segment2)
